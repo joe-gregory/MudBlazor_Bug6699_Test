@@ -10,8 +10,11 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.5" PrivateAssets="all" />
-	<ProjectReference Include="..\joe-gregory\joe-gregory\MudBlazor\src\MudBlazor\MudBlazor.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../joe-gregory/joe-gregory/MudBlazor/src/MudBlazor/MudBlazor.csproj"/>
+	</ItemGroup>
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />

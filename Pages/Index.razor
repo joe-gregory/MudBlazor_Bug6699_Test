@@ -2,15 +2,19 @@
 @inject MudBlazor.ISnackbar Snackbar
 
 <MudStack Style="width: 100%">
-    <MudFileUpload T="IReadOnlyList<IBrowserFile>" @ref="@fileUpload" OnFilesChanged="OnInputFileChanged" Hidden="false" Class="flex-1" InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20" InputStyle="opacity:0"
+    <MudFileUpload T="IReadOnlyList<IBrowserFile>" Files="@myFiles" @ref="@fileUpload" OnFilesChanged="OnInputFileChanged" Hidden="false" Class="flex-1" InputClass="absolute mud-width-full mud-height-full overflow-hidden z-20" InputStyle="opacity:0"
                    @ondragenter="@SetDragClass" @ondragleave="@ClearDragClass" @ondragend="@ClearDragClass">
         <ButtonTemplate>
             <MudPaper Height="300px" Outlined="true" Class="@DragClass">
                 <MudText Typo="Typo.h6">Drag and drop files here or click</MudText>
-                @foreach (var file in fileNames)
+                @if (myFiles != null)
                 {
-                    <MudChip Color="Color.Dark" Text="@file" />
+                    foreach (var file in myFiles)
+                    {
+                        <MudChip Color="Color.Dark" Text="@file.Name" />
+                    }
                 }
+
             </MudPaper>
         </ButtonTemplate>
     </MudFileUpload>
@@ -22,6 +26,7 @@
 
 @code {
     private MudFileUpload<IReadOnlyList<IBrowserFile>> fileUpload;
+    private IReadOnlyList<IBrowserFile> myFiles;
 
     private static string DefaultDragClass = "relative rounded-lg border-2 border-dashed pa-4 mt-4 mud-width-full mud-height-full z-10";
     private string DragClass = DefaultDragClass;
@@ -29,7 +34,7 @@
 
     private void OnInputFileChanged(InputFileChangeEventArgs e)
     {
-        ClearDragClass();
+        //ClearDragClass();
         var files = e.GetMultipleFiles();
         foreach (var file in files)
         {
@@ -45,14 +50,14 @@
         await Task.Delay(100);
         Console.WriteLine("fileUpload.Files: ");
         foreach (var f in fileUpload.Files)
-            {
-                Console.WriteLine(f.Name);
-            }
+        {
+            Console.WriteLine(f.Name);
+        }
         Console.WriteLine("fileNames: ");
         foreach (var f in fileNames)
-            {
-                Console.WriteLine(f);
-            }
+        {
+            Console.WriteLine(f);
+        }
     }
 
     private void Upload()
@@ -63,14 +68,14 @@
         Snackbar.Add($"Files to upload: {filesString}", Severity.Normal);
         Console.WriteLine("fileUpload.Files: ");
         foreach (var f in fileUpload.Files)
-            {
-                Console.WriteLine(f.Name);
-            }
+        {
+            Console.WriteLine(f.Name);
+        }
         Console.WriteLine("fileNames: ");
         foreach (var f in fileNames)
-            {
-                Console.WriteLine(f);
-            }
+        {
+            Console.WriteLine(f);
+        }
     }
 
     private void SetDragClass()
@@ -80,6 +85,6 @@
 
     private void ClearDragClass()
     {
-        DragClass = DefaultDragClass;
+        //DragClass = DefaultDragClass;
     }
 }
